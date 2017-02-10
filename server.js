@@ -16,6 +16,7 @@ var app = express();
 
 // Jade Setting
 console.log("__dirname=" + __dirname);
+app.engine('jade', require('jade').__express);
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 

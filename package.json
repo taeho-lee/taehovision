@@ -9,7 +9,7 @@
   "engines": {
     "//":"Tells Heroku the version of node and npm.",
     "node":"7.4.x",
-    "npm": "4.0.5"
+    "npm": "4.0.x"
   },
   "author": "Taeho Lee",
   "license": "ISC",

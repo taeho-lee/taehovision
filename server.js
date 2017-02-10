@@ -9,7 +9,7 @@ var envMode = process.env.NODE_ENV = process.env.NODE_ENV || consts.ENVIRONMENT_
 var port = process.env.PORT || 8000;
 //mongo ds147799.mlab.com:47799/taehovision -u <dbuser> -p <dbpassword>
 var dbUrl = envMode != consts.ENVIRONMENT_MODE_PRODUCTION ?
-            "mongodb://localhost:30001/multivision"
+            "mongodb://localhost:30001/taehovision"
             :"mongodb://taeho:bizflow@ds147799.mlab.com:47799/taehovision";
 
 var app = express();
@@ -20,6 +20,10 @@ app.set('view engine', 'jade');
 
 // Logger
 app.use(logger('dev'));
+
+
+// Variables
+var mongoMessage;
 
 // bodyParser
 app.use(bodyParser.urlencoded({extended:true}));
@@ -49,27 +53,23 @@ db.on('error', ( function(err){
 })).on('open', function() {
     console.log('multivision db opened.');
 });
-
+// create a schema - one field named message
+var messageSchema = mongoose.Schema({message:String});
+// create a model variable,
+var Message = mongoose.model('message', messageSchema);
+Message.findOne().exec(function(err, messageDoc) {
+    mongoMessage = messageDoc.message;
+});
 
 app.get('/partials/:partialPath', function(req, res) {
+    console.log("get partials");
     res.render('partials/' + req.params.partialPath);
 });
 
 app.get('*', function(req, res) {
+    console.log("get *");
     res.render('index', {mongoMessage:mongoMessage});
 });
 
 app.listen(port);
 console.log('Listening on port ' + port + '...');
-
-function getMessageFromMongo() {
-    console.log("getMessageFromMongo...");
-    // create a schema - one field named message
-    var messageSchema = mongoose.Schema({message:String});
-    // create a model variable,
-    var Message = mongoose.model('message', messageSchema);
-    var mongoMessage;
-    Message.findOne().exec(function(err, messageDoc) {
-        mongoMessage = messageDoc.message;
-    });
-}

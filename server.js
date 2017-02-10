@@ -1,7 +1,7 @@
 var express = require('express'),
     stylus = require('stylus'),
     logger = require('morgan'),
-    bodyParser = require('body-parser')
+    bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 var consts = require("./server.constants");
 
@@ -41,7 +41,7 @@ app.use(stylus.middleware(
 app.use(express.static(__dirname + '/public'));
 
 // MongoDB with Mongoose
-console.log(envMode + " dbUrl=" + dbUrl)
+console.log(envMode + " dbUrl=" + dbUrl);
 mongoose.connect(dbUrl);
 var db = mongoose.connection;
 db.on('error', ( function(err){
@@ -50,14 +50,6 @@ db.on('error', ( function(err){
     console.log('multivision db opened.');
 });
 
-// create a schema - one field named message
-var messageSchema = mongoose.Schema({message:String});
-// create a model variable,
-var Message = mongoose.model('message', messageSchema);
-var mongoMessage;
-Message.findOne().exec(function(err, messageDoc) {
-   mongoMessage = messageDoc.message;
-});
 
 app.get('/partials/:partialPath', function(req, res) {
     res.render('partials/' + req.params.partialPath);
@@ -67,7 +59,17 @@ app.get('*', function(req, res) {
     res.render('index', {mongoMessage:mongoMessage});
 });
 
-
-
 app.listen(port);
 console.log('Listening on port ' + port + '...');
+
+function getMessageFromMongo() {
+    console.log("getMessageFromMongo...");
+    // create a schema - one field named message
+    var messageSchema = mongoose.Schema({message:String});
+    // create a model variable,
+    var Message = mongoose.model('message', messageSchema);
+    var mongoMessage;
+    Message.findOne().exec(function(err, messageDoc) {
+        mongoMessage = messageDoc.message;
+    });
+}

@@ -63,6 +63,11 @@ Message.findOne().exec(function(err, messageDoc) {
     mongoMessage = messageDoc.message;
 });
 
+app.get('/html/:pathPath', function(req, res) {
+    console.log("get html");
+    res.render('hello');
+});
+
 app.get('/partials/:partialPath', function(req, res) {
     console.log("get partials");
     res.render('partials/' + req.params.partialPath);

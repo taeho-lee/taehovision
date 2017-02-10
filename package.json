@@ -16,9 +16,7 @@
   "dependencies": {
     "express": "^4.14.1",
     "jade": "^1.11.0",
-    "mongoose": "^4.8.1"
-  },
-  "devDependencies": {
+    "mongoose": "^4.8.1",
     "body-parser": "^1.16.0",
     "bower": "^1.8.0",
     "morgan": "^1.8.0",

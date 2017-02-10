@@ -73,5 +73,10 @@ app.get('/', function(req, res) {
     res.render('index', {mongoMessage:mongoMessage});
 });
 
+app.get('*', function(req, res) {
+    console.log("get *");
+    res.render('index', {mongoMessage:mongoMessage});
+});
+
 app.listen(port);
 console.log('Listening on port ' + port + '...');

@@ -3,7 +3,9 @@ var express = require('express'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
-    path = require('path')
+    path = require('path');
+
+var serveStatic = require('serve-static');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -26,10 +28,10 @@ app.use(stylus.middleware(
 ));
 console.log("[DEBUG] current directory=" + __dirname);
 
-// Serve static content for the app from the "public" directory in the application directory.
-// GET /style.css etc
-app.use(express.static(path.join(__dirname, '/public')));
-app.use('/vendor',  express.static( path.join(__dirname, '/vendor')));
+//app.use(express.static(path.join(__dirname, '/public')));
+//app.use('/bower_components',  express.static( path.join(__dirname, '/public/bower_components')));
+//app.use(serveStatic(__dirname + '/public/bower_components'))
+app.use(serveStatic(__dirname + '/public'));
 
 
 if(env === 'development') {

@@ -1,11 +1,8 @@
-var express = require('express'),
-    stylus = require('stylus'),
-    logger = require('morgan'),
-    bodyParser = require('body-parser'),
-    mongoose = require('mongoose'),
-    path = require('path');
-
-var serveStatic = require('serve-static');
+var express = require('express');
+var stylus = require('stylus');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -28,10 +25,9 @@ app.use(stylus.middleware(
 ));
 console.log("[DEBUG] current directory=" + __dirname);
 
-//app.use(express.static(path.join(__dirname, '/public')));
-//app.use('/bower_components',  express.static( path.join(__dirname, '/public/bower_components')));
-//app.use(serveStatic(__dirname + '/public/bower_components'))
-app.use(serveStatic(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
+//add this so the browser can GET the bower files
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 
 if(env === 'development') {

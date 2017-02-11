@@ -2,7 +2,8 @@ var express = require('express'),
     stylus = require('stylus'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    path = require('path')
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -23,7 +24,13 @@ app.use(stylus.middleware(
         compile: compile
     }
 ));
-app.use(express.static(__dirname + '/public'));
+console.log("[DEBUG] current directory=" + __dirname);
+
+// Serve static content for the app from the "public" directory in the application directory.
+// GET /style.css etc
+app.use(express.static(path.join(__dirname, '/public')));
+app.use('/vendor',  express.static( path.join(__dirname, '/vendor')));
+
 
 if(env === 'development') {
     mongoose.connect("mongodb://localhost:30001/taehovision");
@@ -46,7 +53,7 @@ app.get('/partials/:partialPath', function(req, res) {
     res.render('partials/' + req.params.partialPath);
 });
 
-app.get('*', function(req, res) {
+app.get('/', function(req, res) {
     res.render('index', {
         mongoMessage: mongoMessage
     });

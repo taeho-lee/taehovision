@@ -25,9 +25,9 @@ app.use(stylus.middleware(
 ));
 console.log("[DEBUG] current directory=" + __dirname);
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/app'));
 //add this so the browser can GET the bower files
-app.use('/bower_components', express.static(__dirname + '/public/bower_components'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 
 if(env === 'development') {

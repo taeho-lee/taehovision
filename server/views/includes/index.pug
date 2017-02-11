@@ -1,0 +1,12 @@
+extends layout
+
+block head-content
+    include css
+    include script
+    base(href="/")
+
+block main-content
+    section.content
+        div(ng-view)
+        h2= mongoMessage
+

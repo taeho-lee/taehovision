@@ -1,17 +1,7 @@
 doctype
 html
     head
-
-
-        link(href="/favicon.icon", rel="shortcut icon", type="image/x-con")
-        link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
-        link(rel="stylesheet/less", href="/bower_components/toastr/dist/toastr.less")
-        link(rel="stylesheet", href="/css/site.css")
-        script(type="text/javascript", src="/bower_components/jquery/dist/jquery.js")
-        script(type="text/javascript", src="/bower_components/angular/angular.js")
-        script(type="text/javascript", src="/bower_components/angular-resource/angular-resource.js")
-        script(type="text/javascript", src="/bower_components/angular-route/angular-route.js")
-        base(href="/")
+        block head-content
     body(ng-app='app')
         block main-content
         script(type="text/javascript", src="/app/app.js")

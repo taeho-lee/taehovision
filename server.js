@@ -23,11 +23,18 @@ app.use(stylus.middleware(
         compile: compile
     }
 ));
+/*
+app.use('/less-css', function() {
+    console.log("/less-css");
+    expressLess(__dirname + '/public/bower_components');
+});
+*/
+
 console.log("[DEBUG] current directory=" + __dirname);
 
-//app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/public'));
 //add this so the browser can GET the bower files
-app.use('/bower_components', express.static('/app/public/bower_components'));
+app.use('/bower_components', express.static('/bower_components'));
 
 
 if(env === 'development') {
@@ -52,7 +59,7 @@ app.get('/partials/:partialPath', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-    res.render('index', {
+    res.render('includes/index', {
         mongoMessage: mongoMessage
     });
 });
